@@ -2703,7 +2703,7 @@ input, select, textarea {
 
 	ul {
 		list-style: disc;
-		margin: 0 0 2rem 0;
+		margin: -1.5rem 0 1rem 0;
 		padding-left: 1rem;
 	}
 
@@ -3011,7 +3011,7 @@ input, select, textarea {
 	}
 
 		table tbody tr:nth-child(2n + 1) {
-			background-color: rgba(0, 0, 0, 0.021);
+			background-color: rgba(0, 0, 0, 0.05);
 		}
 
 		table tbody tr.alt {
@@ -8673,10 +8673,6 @@ input, select, textarea {
 		scroll-behavior: smooth;
 	  }
 	  
-	  ul {
-		list-style: none;
-	  }
-	  
 	  .container {
 		max-width: 1120px;
 		margin-inline: 1.5rem;
@@ -8774,6 +8770,7 @@ input, select, textarea {
 			  .nav__list,
 			  .nav__social {
 				display: flex;
+				list-style: none;
 			  }
 			  
 			  .nav__list {
