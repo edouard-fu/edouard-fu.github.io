@@ -2608,6 +2608,7 @@ input, select, textarea {
 			background-position: center;
 			background-size: 50%;
 			background-repeat: no-repeat;
+			color: #ffffff00
 		}
 		
 
@@ -2619,7 +2620,7 @@ input, select, textarea {
 	}
 
 	.icon.style2:before {
-		box-shadow: inset 0 0 0 2px rgba(39, 29, 165, 0.2);
+		box-shadow: inset 0 0 0 2px rgba(243, 19, 19, 0.2);
 	}
 
 	a.icon.style2:hover:before {
@@ -3010,7 +3011,7 @@ input, select, textarea {
 	}
 
 		table tbody tr:nth-child(2n + 1) {
-			background-color: rgba(0, 0, 0, 0.05);
+			background-color: rgba(0, 0, 0, 0.021);
 		}
 
 		table tbody tr.alt {
@@ -3596,6 +3597,7 @@ input, select, textarea {
 					justify-content: center;
 					width: 100%;
 					max-width: 100%;
+					padding: 2.5rem 2rem 0.5rem 2rem ;
 				}
 
 				.banner.style1 .image {
@@ -4872,6 +4874,13 @@ input, select, textarea {
 	}
 
 /* Spotlight (style1) */
+
+	.horizontal-line {
+		border: 0;
+		border-bottom: solid 1px;
+		color: rgb(0, 0, 0, 0.1); /* Adjust the color as needed */
+		position: relative;
+	}
 
 	.spotlight.style1 {
 		-moz-align-items: -moz-stretch;
