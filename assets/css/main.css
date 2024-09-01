@@ -5152,16 +5152,11 @@ input, select, textarea {
 
 			.spotlight.style2 {
 				padding: 2.5rem 2rem 0.5rem 2rem ;
-				-moz-align-items: -moz-flex-start;
-				-webkit-align-items: -webkit-flex-start;
-				-ms-align-items: -ms-flex-start;
-				align-items: flex-start;
 			}
 
 				.spotlight.style2 .image {
 					width: 15.75rem;
 					height: 15.75rem;
-					margin: 0 2rem 2rem 0;
 				}
 
 		}

@@ -37,7 +37,7 @@ function updateValue() {
     // Show loading message
     log.innerHTML = '<tr><td colspan="8">Generating citations, this may take a few seconds... <br><br> But please refresh the page if it takes too long</td></tr>';
 
-    searchterm = '&term=Fu, EL [Author]';
+    searchterm = '&term=Fu, EL [Author] OR 37397081';
     idURL = pubmedSearchAPI + database + returnmode + returnmax + searchterm;
     console.log(idURL);
 
@@ -71,6 +71,9 @@ function formatReferences(summary) {
             var i = 0;
             while (i < authorCount - 1) {
                 var authorName = summary.result[refs].authors[i].name;
+                if (authorName === 'Fu E') {
+                    authorName = 'Fu EL';
+                }
                 if (authorName === 'Fu EL') {
                     authorName = '<b>' + authorName + '</b>';
                     if (i === 0) {
