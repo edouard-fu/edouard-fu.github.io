@@ -9158,6 +9158,16 @@ input, select, textarea {
 		font-weight: 400;
 		color: #757575;
 	}
+	@media screen and (max-width: 767px) {
+		/* .kdigo-guideline  {
+			visibility: hidden;
+			position: relative;
+		} */
+		.table-responsive-vertical > .table > tbody > tr > td[placeholder-narrow-table]:after {
+			visibility: visible;
+			content: attr(placeholder-narrow-table);
+		}
+		}
 	.table-responsive-vertical.shadow-z-1 {
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
