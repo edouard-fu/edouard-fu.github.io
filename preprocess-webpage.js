@@ -3,199 +3,150 @@ const unirest = require("unirest");
 const ejs = require('ejs');
 const fs = require('fs');
 
-
 // Scrape Google Scholar for aggregate info (e.g. h-index)
-const getAuthorProfileData = async () => {
+const scrapeGoogleScholar = async () => {
   try {
     const url = "https://scholar.google.nl/citations?user=zqb-X38AAAAJ&hl";
-    const response = await unirest
-      .get(url)
-      .headers({
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-      });
+    const response = await unirest.get(url).headers({
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+    });
 
-    let $ = cheerio.load(response.body);
-    let author_results = {};
+    const $ = cheerio.load(response.body);
+    const authorResults = {
+      name: $("#gsc_prf_in").text(),
+      position: $("#gsc_prf_inw+ .gsc_prf_il").text(),
+      email: $("#gsc_prf_ivh").text(),
+      departments: $("#gsc_prf_int").text()
+    };
 
-    author_results.name = $("#gsc_prf_in").text();
-    author_results.position = $("#gsc_prf_inw+ .gsc_prf_il").text();
-    author_results.email = $("#gsc_prf_ivh").text();
-    author_results.departments = $("#gsc_prf_int").text();
+    const citedBy = {
+      citations: {
+        all: $("tr:nth-child(1) .gsc_rsb_sc1+ .gsc_rsb_std").text()
+      },
+      hIndex: {
+        all: $("tr:nth-child(2) .gsc_rsb_sc1+ .gsc_rsb_std").text()
+      },
+      iIndex: {
+        all: $("tr~ tr+ tr .gsc_rsb_sc1+ .gsc_rsb_std").text()
+      }
+    };
 
-    let cited_by = {};
-    cited_by.table = [];
-    cited_by.table[0] = {};
-    cited_by.table[0].citations = {};
-    cited_by.table[0].citations.all = $("tr:nth-child(1) .gsc_rsb_sc1+ .gsc_rsb_std").text();
-    cited_by.table[1] = {};
-    cited_by.table[1].h_index = {};
-    cited_by.table[1].h_index.all = $("tr:nth-child(2) .gsc_rsb_sc1+ .gsc_rsb_std").text();
-    cited_by.table[2] = {};
-    cited_by.table[2].i_index = {};
-    cited_by.table[2].i_index.all = $("tr~ tr+ tr .gsc_rsb_sc1+ .gsc_rsb_std").text();
-
-    console.log(author_results);
-    console.log(cited_by.table);
-
-    let citation_info = {};
-    citation_info.citation_sum = cited_by.table[0].citations.all
-    citation_info.h_index = cited_by.table[1].h_index.all
-    citation_info.i_index = cited_by.table[2].i_index.all
-    return citation_info
-
-  } catch (e) {
-    console.log(e);
+    return {
+      citationSum: citedBy.citations.all,
+      hIndex: citedBy.hIndex.all,
+      iIndex: citedBy.iIndex.all
+    };
+  } catch (error) {
+    console.error("Error occurred while scraping Google Scholar:", error);
   }
-
-  
 };
 
-citation_info = getAuthorProfileData();
-console.log(citation_info);
-console.log("Done scraping Google Scholar.")
+// Scrape PubMed for all publication info
+const scrapePubmed = async () => {
+    const HTMLpublication = '<tr><td>%authors%</td><td>%title%</td><td><i>%journal%</i></td><td>%date%</td><td><a href="%data%" target="_blank">%PMID%</a></td></tr>';
 
-// Scrape pubmed for all publication info
-var HTMLpublication = '<tr><td>%authors%</td><td>%title%</td><td><i>%journal%</i></td><td>%date%</td><td><a href="%data%" target="_blank">%PMID%</a></td></tr>';
+    const pubmedSearchAPI = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?";
+    const pubmedSummaryAPI = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?";
+    const database = "db=pubmed";
+    const returnMode = "&retmode=json";
+    const returnMax = "&retmax=500";
+    const searchTerm = "&term=Fu, EL [Author] OR 37397081";
+    const returnType = "&rettype=abstract";
+    const idURL = `${pubmedSearchAPI}${database}${returnMode}${returnMax}${searchTerm}`;
 
-var publications, idStringList;
-var pubmedSearchAPI = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?";
-var pubmedSummaryAPI = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?";
-var database = "db=pubmed";
-var returnmode = "&retmode=json";
-var returnmax = "&retmax=500";
-var searchterm = "&term=Fu, EL [Author] OR 37397081";
-var returntype = "&rettype=abstract";
-var idURL = pubmedSearchAPI + database + returnmode + returnmax + searchterm;
-console.log(idURL);
-
-var getPubmed = function(url) {
-    return new Promise(function(resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('get', url, true);
-        xhr.responseType = 'json';
-        xhr.onload = function() {
-            var status = xhr.status;
-            if (status == 200) {
-                resolve(xhr.response);
-            } else {
-                reject(status);
-            }
+    const getPubmed = async (url) => {
+        const fetch = (await import('node-fetch')).default;
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
         };
-        xhr.send();
-    });
-};
 
-function scrapePubmed() {
-  var scrape_results = {}
-    getPubmed(idURL).then(function(data) {
-        var idList = data.esearchresult.idlist;
-        idStringList = idList.toString();
-        idStringList = '&id=' + idStringList;
-        summaryURL = pubmedSummaryAPI + database + returnmode + returntype + idStringList;
-        getPubmed(summaryURL).then(function(summary) {
-            scrape_results = formatReferences(summary);
-        }, function(status) {
-            publications = 'Something went wrong getting the ids.';
-        });
-    }, function(status) {
-        publications = 'Something went wrong getting the ids.';
-    });
-
-  return scrape_results
-}
-
-function formatReferences(summary) {
-    var publicationList = '';
-    var first_authorships = 0;
-    var last_authorships = 0;
-    var number_of_papers = 0;
-    for (var refs in summary.result) {
-        if (refs !== 'uids') {
-            var authors = '';
-            var publication = '';
-            var authorCount = summary.result[refs].authors.length;
-            var i = 0;
-            while (i < authorCount - 1) {
-                var authorName = summary.result[refs].authors[i].name;
-                if (authorName === 'Fu E') {
-                    authorName = 'Fu EL';
-                }
+    const formatReferences = (summary) => {
+        let publicationList = '';
+        let firstAuthorships = 0;
+        let lastAuthorships = 0;
+        let numberOfPapers = 0;
+        
+        for (const refs in summary.result) {
+            if (refs !== 'uids') {
+            let authors = '';
+        
+            summary.result[refs].authors.forEach((author, index) => {
+                let authorName = author.name === 'Fu E' ? 'Fu EL' : author.name;
                 if (authorName === 'Fu EL') {
-                    authorName = '<b>' + authorName + '</b>';
-                    if (i === 0) {
-                        first_authorships++;
-                    }
+                authorName = `<b>${authorName}</b>`;
+                if (index === 0) firstAuthorships++;
                 }
-                authors += authorName + ', ';
-                i++;
-            }
-            var lastAuthor = summary.result[refs].lastauthor;
+                authors += `${authorName}, `;
+            });
+        
+            let lastAuthor = summary.result[refs].lastauthor;
             if (lastAuthor === 'Fu EL') {
-                lastAuthor = '<b>' + lastAuthor + '</b>';
-                last_authorships++;
+                lastAuthor = `<b>${lastAuthor}</b>`;
+                lastAuthorships++;
             }
             authors += lastAuthor;
-            publication = HTMLpublication.replace('%data%', 'http://www.ncbi.nlm.nih.gov/pubmed/' + refs);
-            publication = publication.replace('%authors%', authors);
-            publication = publication.replace('%title%', summary.result[refs].title);
-            publication = publication.replace('%journal%', summary.result[refs].source);
-            publication = publication.replace('%PMID%', summary.result[refs].uid);
-            if (summary.result[refs].volume !== '') {
-                publication = publication.replace('%volume%', ' ' + summary.result[refs].volume);
-                publication = publication.replace('%issue%', '(' + summary.result[refs].issue + ')');
-                publication = publication.replace('%pages%', ': ' + summary.result[refs].pages + '. ');
-                var date = summary.result[refs].pubdate.slice(0, 4);
-                publication = publication.replace('%date%', date + '');
+        
+            let publication = HTMLpublication.replace('%data%', `http://www.ncbi.nlm.nih.gov/pubmed/${refs}`)
+                .replace('%authors%', authors)
+                .replace('%title%', summary.result[refs].title)
+                .replace('%journal%', summary.result[refs].source)
+                .replace('%PMID%', summary.result[refs].uid);
+        
+            if (summary.result[refs].volume) {
+                publication = publication.replace('%volume%', ` ${summary.result[refs].volume}`)
+                .replace('%issue%', `(${summary.result[refs].issue})`)
+                .replace('%pages%', `: ${summary.result[refs].pages}. `)
+                .replace('%date%', summary.result[refs].pubdate.slice(0, 4));
             } else {
-                publication = publication.replace('%volume%', ' In Press');
-                publication = publication.replace('%issue%', '.');
-                publication = publication.replace('%pages%', '');
-                publication = publication.replace('%date%', '');
+                publication = publication.replace('%volume%', ' In Press')
+                .replace('%issue%', '.')
+                .replace('%pages%', '')
+                .replace('%date%', '');
             }
+        
             publicationList = publication + publicationList;
-            number_of_papers++;
+            numberOfPapers++;
+            }
         }
+        
+        return { publicationList, numberOfPapers, firstAuthorships, lastAuthorships };
+        };
+
+    try {
+        const data = await getPubmed(idURL);
+        const idList = data.esearchresult.idlist.toString();
+        const summaryURL = `${pubmedSummaryAPI}${database}${returnMode}${returnType}&id=${idList}`;
+        const summary = await getPubmed(summaryURL);
+        return formatReferences(summary);
+    } catch (error) {
+        console.error("Error occurred while scraping PubMed:", error);
     }
-    console.log({publicationList, number_of_papers, first_authorships, last_authorships});
-    console.log("End of formatting pubmed citations.")
-
-    return { publicationList, number_of_papers, first_authorships, last_authorships };
-}
-
-let {publicationList, number_of_papers, first_authorships, last_authorships} = scrapePubmed();
-console.log({publicationList, number_of_papers, first_authorships, last_authorships});
-console.log("Done scraping Pubmed.")
+};
 
 
-// Combine info on author stats from pubmed and google scholar into 1 variable
-let authorStats =  '<b>Number of papers:</b> %number_of_papers% <br>' +
-                    '<b>Number of first authorships:</b> %first_authorships%<br>' +
-                    '<b>Number of last authorships:</b> %last_authorships% <br>' +
-                    '<b>Total number of citations:</b> %citation-sum% <br>' +
-                    '<b>H-index:</b> %h-index% <br>';
 
-authorStats = authorStats.replace('%number_of_papers%', number_of_papers)
-authorStats = authorStats.replace('%first_authorships%', first_authorships)
-authorStats = authorStats.replace('%last_authorships%', last_authorships)
-authorStats = authorStats.replace('%citation-sum%', citation_info.citation_sum)
-authorStats = authorStats.replace('%h-index%', citation_info.h_index)
+const main = async () => {
+  const citationInfo = await scrapeGoogleScholar();
+  const { publicationList, numberOfPapers, firstAuthorships, lastAuthorships } = await scrapePubmed();
 
-// Render info into html template
-const templateFiles = ['docs/index.html', 'docs/pages/cv.html', 'docs/pages/network.html', 'docs/pages/publications.html', 'docs/pages/talks.html', 'docs/pages/team.html'];
+  let authorStats = `<b>Number of papers:</b> ${numberOfPapers} <br>
+                     <b>Number of first authorships:</b> ${firstAuthorships}<br>
+                     <b>Number of last authorships:</b> ${lastAuthorships} <br>
+                     <b>Total number of citations:</b> ${citationInfo.citationSum} <br>
+                     <b>H-index:</b> ${citationInfo.hIndex} <br>`;
 
-// Loop through each template file
-templateFiles.forEach((filePath) => {
-    // Read the template file
+  const templateFiles = ['docs/index.html', 'docs/pages/cv.html', 'docs/pages/network.html', 'docs/pages/publications.html', 'docs/pages/talks.html', 'docs/pages/team.html'];
+
+  templateFiles.forEach((filePath) => {
     const template = fs.readFileSync(filePath, 'utf-8');
-
-    // Render the HTML with the variables
     const renderedHtml = ejs.render(template, { authorStats, publicationList });
-
-    // Write the rendered HTML to a file
     fs.writeFileSync(filePath, renderedHtml);
+  });
 
-    console.log(`Replaced authorStats by: ${authorStats}`);
-    console.log(`Rendered publicationList by: ${publicationList}`);
-    console.log(`Rendered and saved: ${filePath}`);
-});
+  console.log("Done rendering HTML files.");
+};
+
+main();
