@@ -52,8 +52,8 @@ const getAuthorProfileData = async () => {
 };
 
 citation_info = getAuthorProfileData();
-
-
+console.log(citation_info);
+console.log("Done scraping Google Scholar.")
 
 // Scrape pubmed for all publication info
 var HTMLpublication = '<tr><td>%authors%</td><td>%title%</td><td><i>%journal%</i></td><td>%date%</td><td><a href="%data%" target="_blank">%PMID%</a></td></tr>';
@@ -157,11 +157,16 @@ function formatReferences(summary) {
             number_of_papers++;
         }
     }
+    console.log({publicationList, number_of_papers, first_authorships, last_authorships});
+    console.log("End of formatting pubmed citations.")
 
     return { publicationList, number_of_papers, first_authorships, last_authorships };
 }
 
 let {publicationList, number_of_papers, first_authorships, last_authorships} = scrapePubmed();
+console.log({publicationList, number_of_papers, first_authorships, last_authorships});
+console.log("Done scraping Pubmed.")
+
 
 // Combine info on author stats from pubmed and google scholar into 1 variable
 let authorStats =  '<b>Number of papers:</b> %number_of_papers% <br>' +
