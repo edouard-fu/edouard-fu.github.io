@@ -99,6 +99,7 @@ const scrapePubmed = async () => {
       //     if (data.length > 0) {
       //       const address = data[0].display_name;
       //       console.log(`Address: ${address}`);
+      //       console.log(`Latitude: ${location.lat}, Longitude: ${location.lon}`);
       //     } else {
       //       console.error('No results found');
       //     }
@@ -107,6 +108,7 @@ const scrapePubmed = async () => {
 
     // }
 
+    // DIT MSS NIET NODIG?
     // const getLongLatFromAddress = async (url) => {
     //   const fetch = require('node-fetch');
 
