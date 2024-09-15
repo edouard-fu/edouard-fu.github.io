@@ -1,0 +1,193 @@
+/* style variables */
+$noOfSlides: 5;
+$carouselHeight: 300px;
+$carouselWidth: 400px;
+$carouselIndicatorSize: 15px;
+$carouselControlSize: 30px;
+$slideTransition: 0.5s;
+
+/* Control & indicator mixin */
+.carousel {
+  height: $carouselHeight;
+  width: $carouselWidth;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  padding: 0;
+  list-style: none;
+
+  &__controls,
+  &__activator {
+    display: none;
+  }
+
+  /* Where the magic happens */
+  &__activator:nth-of-type(1):checked ~ .carousel__track {
+    transform: translateX(0%);
+  }
+  &__activator:nth-of-type(1):checked ~ .carousel__slide:nth-of-type(1) {
+    transition: opacity $slideTransition, transform $slideTransition;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    transform: scale(1);
+  }
+  &__activator:nth-of-type(1):checked ~ .carousel__controls:nth-of-type(1),
+  &__activator:nth-of-type(1):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(1) {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Repeat for each slide */
+  &__activator:nth-of-type(2):checked ~ .carousel__track {
+    transform: translateX(-100%);
+  }
+  &__activator:nth-of-type(2):checked ~ .carousel__slide:nth-of-type(2) {
+    transition: opacity $slideTransition, transform $slideTransition;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    transform: scale(1);
+  }
+  &__activator:nth-of-type(2):checked ~ .carousel__controls:nth-of-type(2),
+  &__activator:nth-of-type(2):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(2) {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Continue for slides 3 to 5 */
+
+  /* Control element - right/left arrows */
+  &__control {
+    height: $carouselControlSize;
+    width: $carouselControlSize;
+    margin-top: calc(-1 * $carouselControlSize / 2);
+    top: 50%;
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    border-width: 5px 5px 0 0;
+    border-style: solid;
+    border-color: #fafafa;
+    opacity: 0.35;
+    outline: 0;
+    z-index: 3;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &--backward {
+      left: 10px;
+      transform: rotate(-135deg);
+    }
+
+    &--forward {
+      right: 10px;
+      transform: rotate(45deg);
+    }
+  }
+
+  /* Element for holding slide indicators */
+  &__indicators {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Indicator for indicating active slide */
+  &__indicator {
+    height: $carouselIndicatorSize;
+    width: $carouselIndicatorSize;
+    border-radius: 100%;
+    display: inline-block;
+    z-index: 2;
+    cursor: pointer;
+    opacity: 0.35;
+    margin: 0 2.5px;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  /* Create rules for when slides are contained within a track */
+  &__track {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    transition: transform $slideTransition ease 0s;
+  }
+
+  &__slide {
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+
+    &:nth-of-type(1) {
+      transform: translateX(0%);
+    }
+    &:nth-of-type(2) {
+      transform: translateX(100%);
+    }
+    /* Continue for slides 3 to 5 */
+  }
+
+  &--scale .carousel__slide {
+    transform: scale(0);
+  }
+
+  &__slide {
+    height: 100%;
+    position: absolute;
+    overflow-y: auto;
+    opacity: 0;
+  }
+}
+
+.carousel-container {
+  display: inline-block;
+}
+
+.my-carousel {
+  border-radius: 5px;
+  margin: 30px;
+}
+
+.carousel__slide {
+  overflow: hidden;
+}
+
+.carousel--thumb .carousel__indicator {
+  height: 30px;
+  width: 30px;
+}
+
+.carousel__indicator {
+  background-color: #fafafa;
+}
+
+.carousel__slide:nth-of-type(1),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(1) {
+  background-image: url('https://unsplash.it/300?random');
+  background-size: cover;
+  background-position: center;
+}
+
+.carousel__slide:nth-of-type(2),
+.carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
+  background-image: url('https://unsplash.it/600?random');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Continue for slides 3 to 5 */
