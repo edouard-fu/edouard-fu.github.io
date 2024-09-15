@@ -43,7 +43,7 @@ const getAuthorProfileData = async () => {
     citation_info.h_index = cited_by.table[1].h_index.all
     citation_info.i_index = cited_by.table[2].i_index.all
     return citation_info
-    
+
   } catch (e) {
     console.log(e);
   }
@@ -190,5 +190,7 @@ templateFiles.forEach((filePath) => {
     // Write the rendered HTML to a file
     fs.writeFileSync(filePath, renderedHtml);
 
+    console.log(`Replaced authorStats by: ${authorStats}`);
+    console.log(`Rendered publicationList by: ${publicationList}`);
     console.log(`Rendered and saved: ${filePath}`);
 });
