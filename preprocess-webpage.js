@@ -37,15 +37,18 @@ const getAuthorProfileData = async () => {
 
     console.log(author_results);
     console.log(cited_by.table);
+
+    let citation_info = {};
+    citation_info.citation_sum = cited_by.table[0].citations.all
+    citation_info.h_index = cited_by.table[1].h_index.all
+    citation_info.i_index = cited_by.table[2].i_index.all
+    return citation_info
+    
   } catch (e) {
     console.log(e);
   }
 
-  let citation_info = {};
-  citation_info.citation_sum = cited_by.table[0].citations.all
-  citation_info.h_index = cited_by.table[1].h_index.all
-  citation_info.i_index = cited_by.table[2].i_index.all
-  return citation_info
+  
 };
 
 citation_info = getAuthorProfileData();
