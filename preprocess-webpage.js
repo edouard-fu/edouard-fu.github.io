@@ -87,6 +87,45 @@ const scrapePubmed = async () => {
 
     // }
 
+    // const getAddressFromAffiliation = async (url) => {
+      // const fetch = require('node-fetch');
+
+      // const affiliation = 'Department of Computer Science, University of Example, Example City, Country'; // Replace with actual affiliation string
+      // const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(affiliation)}&format=json`;
+
+      // fetch(url)
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     if (data.length > 0) {
+      //       const address = data[0].display_name;
+      //       console.log(`Address: ${address}`);
+      //     } else {
+      //       console.error('No results found');
+      //     }
+      //   })
+      //   .catch(error => console.error('Error:', error));
+
+    // }
+
+    // const getLongLatFromAddress = async (url) => {
+    //   const fetch = require('node-fetch');
+
+    //   const address = 'YOUR_AFFILIATION_ADDRESS_HERE'; // Replace with the actual address
+    //   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
+
+    //   fetch(url)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       if (data.length > 0) {
+    //         const location = data[0];
+    //         console.log(`Latitude: ${location.lat}, Longitude: ${location.lon}`);
+    //       } else {
+    //         console.error('No results found');
+    //       }
+    //     })
+    //     .catch(error => console.error('Error:', error));
+    //   }
+
     const formatReferences = (summary) => {
         let publicationList = '';
         let firstAuthorships = 0;
