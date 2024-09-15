@@ -63,6 +63,30 @@ const scrapePubmed = async () => {
         return response.json();
         };
 
+    // const getAffiliations = async (url) => {
+    //   const fetch = require('node-fetch');
+
+    //   const pmid = 'YOUR_PMID_HERE'; // Replace with your PubMed ID
+    //   const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=${pmid}&retmode=xml`;
+
+    //   fetch(url)
+    //     .then(response => response.text())
+    //     .then(data => {
+    //       // Parse the XML response to extract affiliations
+    //       const parser = new DOMParser();
+    //       const xmlDoc = parser.parseFromString(data, 'text/xml');
+    //       const authors = xmlDoc.getElementsByTagName('Author');
+    //       for (let i = 0; i < authors.length; i++) {
+    //         const affiliations = authors[i].getElementsByTagName('Affiliation');
+    //         for (let j = 0; j < affiliations.length; j++) {
+    //           console.log(affiliations[j].textContent);
+    //         }
+    //       }
+    //     })
+    //     .catch(error => console.error('Error:', error));
+
+    // }
+
     const formatReferences = (summary) => {
         let publicationList = '';
         let firstAuthorships = 0;
