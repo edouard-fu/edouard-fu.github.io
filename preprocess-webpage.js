@@ -99,7 +99,7 @@ const scrapePubmed = async () => {
       //     if (data.length > 0) {
       //       const address = data[0].display_name;
       //       console.log(`Address: ${address}`);
-      //       console.log(`Latitude: ${location.lat}, Longitude: ${location.lon}`);
+      //       console.log(`Latitude: ${data[0].lat}, Longitude: ${data[0].lon}`);
       //     } else {
       //       console.error('No results found');
       //     }
