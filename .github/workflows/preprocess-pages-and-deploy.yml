@@ -19,7 +19,7 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run: npm install cheerio unirest ejs
+      run: npm install cheerio unirest ejs node-fetch
 
     - name: Run preprocessing script
       run: node preprocess-webpage.js
