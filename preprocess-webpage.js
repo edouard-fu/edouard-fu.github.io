@@ -146,6 +146,7 @@ const scrapePubmed = async () => {
                 }
                 authors += `${authorName}, `;
             });
+            authors = authors.slice(0, -2); // Remove trailing , and space
         
             let lastAuthor = summary.result[refs].lastauthor;
             if (lastAuthor === 'Fu EL') {
@@ -174,7 +175,6 @@ const scrapePubmed = async () => {
             numberOfPapers++;
             }
         }
-        
         return { publicationList, numberOfPapers, firstAuthorships, lastAuthorships };
         };
 
