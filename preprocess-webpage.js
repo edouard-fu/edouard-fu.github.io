@@ -141,18 +141,16 @@ const scrapePubmed = async () => {
             summary.result[refs].authors.forEach((author, index) => {
                 let authorName = author.name === 'Fu E' ? 'Fu EL' : author.name;
                 if (authorName === 'Fu EL') {
-                authorName = `<b>${authorName}</b>`;
-                if (index === 0) firstAuthorships++;
+                  authorName = `<b>${authorName}</b>`;
+                  if (index === 0) firstAuthorships++;
                 }
                 authors += `${authorName}, `;
             });
         
             let lastAuthor = summary.result[refs].lastauthor;
             if (lastAuthor === 'Fu EL') {
-                lastAuthor = `<b>${lastAuthor}</b>`;
                 lastAuthorships++;
             }
-            authors += lastAuthor;
         
             let publication = HTMLpublication.replace('%data%', `http://www.ncbi.nlm.nih.gov/pubmed/${refs}`)
                 .replace('%authors%', authors)
