@@ -204,9 +204,9 @@
 		
 				// Wrap around logic.
 				if (newScrollLeft >= scrollWidth - clientWidth) {
-					newScrollLeft = newScrollLeft - (scrollWidth - clientWidth); // Wrap to start.
+					newScrollLeft = 0; // Wrap to start.
 				} else if (newScrollLeft <= 0) {
-					newScrollLeft = scrollWidth - clientWidth + newScrollLeft; // Wrap to end.
+					newScrollLeft = scrollWidth - clientWidth; // Wrap to end.
 				}
 		
 				$this.scrollLeft(newScrollLeft);
@@ -227,9 +227,9 @@
 		
 					// Wrap around logic.
 					if (newScrollLeft >= scrollWidth - clientWidth) {
-						newScrollLeft = newScrollLeft - (scrollWidth - clientWidth); // Wrap to start.
+						newScrollLeft = 0; // Wrap to start.
 					} else if (newScrollLeft <= 0) {
-						newScrollLeft = scrollWidth - clientWidth + newScrollLeft; // Wrap to end.
+						newScrollLeft = scrollWidth - clientWidth; // Wrap to end.
 					}
 		
 					$inner.scrollLeft(newScrollLeft);
