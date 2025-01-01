@@ -187,58 +187,42 @@
 
 		// Style #2.
 			$('.gallery')
-			.on('wheel', '.inner', function(event) {
-				var $this = $(this),
-					delta = (event.originalEvent.deltaX * 30),
-					scrollWidth = $this[0].scrollWidth,
-					clientWidth = $this[0].clientWidth;
-		
-				// Cap delta.
-				if (delta > 0)
-					delta = Math.min(25, delta);
-				else if (delta < 0)
-					delta = Math.max(-25, delta);
-		
-				// Scroll.
-				var newScrollLeft = $this.scrollLeft() + delta;
-		
-				// Wrap around logic.
-				if (newScrollLeft >= scrollWidth - clientWidth) {
-					newScrollLeft = newScrollLeft - (scrollWidth - clientWidth); // Wrap to start.
-				} else if (newScrollLeft <= 0) {
-					newScrollLeft = scrollWidth - clientWidth + newScrollLeft; // Wrap to end.
-				}
-		
-				$this.scrollLeft(newScrollLeft);
-			})
-			.on('mouseenter', '.forward, .backward', function(event) {
-				var $this = $(this),
-					$inner = $this.siblings('.inner'),
-					direction = ($this.hasClass('forward') ? 1 : -1),
-					scrollWidth = $inner[0].scrollWidth,
-					clientWidth = $inner[0].clientWidth;
-		
-				// Clear move interval.
-				clearInterval(this._gallery_moveIntervalId);
-		
-				// Start interval.
-				this._gallery_moveIntervalId = setInterval(function() {
-					var newScrollLeft = $inner.scrollLeft() + (5 * direction);
-		
-					// Wrap around logic.
-					if (newScrollLeft >= scrollWidth - clientWidth) {
-						newScrollLeft = newScrollLeft - (scrollWidth - clientWidth); // Wrap to start.
-					} else if (newScrollLeft <= 0) {
-						newScrollLeft = scrollWidth - clientWidth + newScrollLeft; // Wrap to end.
-					}
-		
-					$inner.scrollLeft(newScrollLeft);
-				}, 10);
-			})
-			.on('mouseleave', '.forward, .backward', function(event) {
-				// Clear move interval.
-				clearInterval(this._gallery_moveIntervalId);
-			});
+				.on('wheel', '.inner', function(event) {
+
+					var	$this = $(this),
+						delta = (event.originalEvent.deltaX * 10);
+
+					// Cap delta.
+						if (delta > 0)
+							delta = Math.min(25, delta);
+						else if (delta < 0)
+							delta = Math.max(-25, delta);
+
+					// Scroll.
+						$this.scrollLeft( $this.scrollLeft() + delta );
+
+				})
+				.on('mouseenter', '.forward, .backward', function(event) {
+
+					var $this = $(this),
+						$inner = $this.siblings('.inner'),
+						direction = ($this.hasClass('forward') ? 1 : -1);
+
+					// Clear move interval.
+						clearInterval(this._gallery_moveIntervalId);
+
+					// Start interval.
+						this._gallery_moveIntervalId = setInterval(function() {
+							$inner.scrollLeft( $inner.scrollLeft() + (15 * direction) );
+						}, 10);
+
+				})
+				.on('mouseleave', '.forward, .backward', function(event) {
+
+					// Clear move interval.
+						clearInterval(this._gallery_moveIntervalId);
+
+				});
 
 		// Lightbox.
 			$('.gallery.lightbox')
