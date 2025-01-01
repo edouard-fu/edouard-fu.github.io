@@ -213,7 +213,7 @@
 
 					// Start interval.
 						this._gallery_moveIntervalId = setInterval(function() {
-							$inner.scrollLeft( $inner.scrollLeft() + (5 * direction) );
+							$inner.scrollLeft( $inner.scrollLeft() + (15 * direction) );
 						}, 10);
 
 				})
