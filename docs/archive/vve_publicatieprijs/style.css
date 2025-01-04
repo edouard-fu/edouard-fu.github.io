@@ -1,0 +1,300 @@
+/*
+ Theme Name:   YOOtheme Child Theme
+ Template:     yootheme
+ Author:       Nine Degrees
+ Description:  YOOtheme Child Theme
+ Version:      1.0.0
+ Text Domain:  yootheme-child
+*/
+
+@media (min-width: 1024px) {
+	body .uk-logo {
+		margin: 10px 0px;
+	}
+}
+
+/* Ipad liggend menu fix */
+@media (min-width: 1024px) and (max-width: 1365px) {
+	body .uk-navbar-nav {
+		gap: 20px;
+	}
+
+	body .uk-navbar-nav li a {
+		font-size: 13px;
+	}
+}
+
+body .headerContact {
+	margin-right: -15px;
+}
+
+.uk-pointer {
+	cursor: pointer;
+}
+.uk-input.wpcf7-not-valid,
+.uk-textarea.wpcf7-not-valid {
+	border-color: #dc3232;
+}
+.wpcf7-not-valid-tip {
+	display: none !important;
+}
+
+body .tm-headerbar-default {
+	padding: 0px;
+}
+
+/* body .uk-navbar-left {
+  display: flex;
+  flex: auto;
+  justify-content: space-between;
+} */
+
+body .uk-navbar-dropdown {
+	background: rgb(255, 255, 255);
+	background: linear-gradient(0deg, rgba(255, 255, 255, 1) 95%, rgba(242, 242, 242, 1) 100%);
+}
+
+body .tm-page {
+	border-bottom: solid 0px white;
+}
+.tm-header .uk-sticky {
+	z-index: 981;
+}
+.leden_content h1 {
+	color: #087391 !important;
+	font-size: 35px;
+}
+/* MIJN ACCOUNT */
+@media (min-width: 960px) {
+	.group.columns2 {
+		width: 50%;
+		float: left;
+	}
+}
+.group.columns1 {
+	clear: both;
+	margin-bottom: 10px;
+}
+.mijn_gegevens h1 {
+	margin-bottom: 10px;
+}
+.mijn_gegevens .field {
+	padding-left: 0px;
+	width: 100%;
+	padding-bottom: 5px;
+	min-height: 34px;
+}
+@media (min-width: 960px) {
+	.mijn_gegevens .field .title {
+		width: 150px;
+		display: inline-block;
+		vertical-align: middle;
+		font-weight: 600;
+	}
+}
+.mijn_gegevens .field strong {
+	font-weight: 600;
+	display: inline-block;
+	min-width: 150px;
+}
+.mijn_gegevens .field .title label {
+	font-weight: 600;
+	text-align: left;
+	width: 150px;
+	padding-top: 7px;
+}
+@media (min-width: 960px) {
+	.mijn_gegevens .field .value {
+		width: calc(100% - 175px);
+		display: inline-block;
+		vertical-align: middle;
+	}
+}
+.clear {
+	clear: both;
+}
+@media (min-width: 960px) {
+	.group.columns1 .field .title,
+	.group.columns1 .field .title label {
+		width: 250px;
+	}
+	.group.columns1 .field .value {
+		width: calc(100% - 275px);
+	}
+	.group.expertises .value {
+		width: 100% !important;
+		columns: 2;
+	}
+}
+.group .field .value label {
+	display: inline-block;
+	padding-top: 7px;
+	padding-right: 10px;
+}
+.group.expertises .value label {
+	display: block;
+	padding: 0px;
+}
+.agenda_home .date {
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+	border: 2px solid #687186;
+	flex-basis: auto;
+}
+.agenda_home .date .day {
+	font-size: 24px;
+	font-weight: 300;
+	color: #687186;
+	text-align: center;
+	width: 100%;
+	float: left;
+	margin-top: 15px;
+	line-height: 24px;
+}
+.agenda_home .date .month {
+	font-size: 13px;
+	font-weight: bold;
+	color: #687186;
+	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
+	float: left;
+	line-height: 18px;
+}
+.custom_sidebar .uk-active {
+	font-weight: bold;
+}
+/* KENNISBANK */
+.hkb_widget_toc {
+	overflow: hidden;
+}
+#hkb .hkb-mainpage .hkb-mainpage__sidebar,
+#hkb.hkb-searchresults > li .hkb-searchresults__excerpt,
+#hkb.hkb-searchresults > li.hkb-searchresults__showall,
+#hkb.hkb-searchresults > li.hkb-searchresults__noresults,
+#hkb .hkb-article-related {
+	font-size: 1em;
+}
+#hkb .widget {
+	background: #f6f8fa;
+}
+.tm-header .uk-navbar {
+	border-top: 1px solid #e7e8ea;
+}
+.tm-header .uk-navbar > * {
+	margin-top: -1px;
+}
+#hkb .hkb-site-search .hkb-site-search__field {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+#hkb .hkb-site-search .hkb-site-search__field:focus {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+#hkb .widget_ht-kb-articles-widget li {
+	position: relative;
+	padding: 0 0 0 25px;
+}
+#hkb .widget_ht-kb-articles-widget li:before {
+	content: url("data:image/svg+xml;charset=UTF-8, %3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 384 512' fill='%23666'%3E%3Cpath d='M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z'/%3E%3C/svg%3E");
+	position: absolute;
+	top: 4px;
+	bottom: 0;
+	left: 0;
+}
+/* INLOGGEN */
+#loginform .login-username label,
+#loginform .login-password label
+{
+	width: 100px;
+	display: inline-block;
+	vertical-align: middle;
+	font-weight: 600;
+}
+#loginform .login-username input,
+#loginform .login-password input
+{
+	width: 300px;
+	display: inline-block;
+	vertical-align: middle;
+}
+#loginform .button,
+#resetpasswordform .button,
+#lostpasswordform .button
+{
+	margin: 0;
+    overflow: visible;
+    font: inherit;
+    -webkit-appearance: none;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 30px;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 46px;
+    text-align: center;
+    text-decoration: none;
+    transition: .2s ease-in-out;
+    transition-property: color, background-color, background-position, background-size, border-color, box-shadow;
+    font-family: Inter;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    font-style: normal;
+    border-radius: 500px;
+    background-origin: border-box;
+	background-position: 50% 100%;
+    background-size: 0;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0.165,0.85,0.45,1);
+	background-color: #087391;
+    color: #fff;
+    background-image: radial-gradient(circle at 50% 100%, #fff 1%, transparent 1%);
+    border: 1px solid transparent;
+	cursor: pointer;
+}
+#loginform .button:hover,
+#resetpasswordform .button:hover,
+#lostpasswordform .button:hover
+{
+	background-size: 15000%;
+	color: #087391;
+    background-color: #087391;
+    border: 1px solid #087391;
+}
+#resetpasswordform #som_new_user_pass,
+#resetpasswordform #som_new_user_pass_again,
+#lostpasswordform #somfrp_user_info
+{
+	max-width: 100%;
+    width: 100%;
+    border: 0 none;
+    padding: 0 15px;
+    background: #fff;
+    color: #687186;
+    transition: .2s ease-in-out;
+    transition-property: color, background-color, border-color, box-shadow;
+    border-radius: 500px;
+	height: 48px;
+    vertical-align: middle;
+    display: inline-block;
+    border: 2px solid #e7e8ea;
+	box-sizing: border-box;
+}
+#resetpasswordform fieldset,
+#lostpasswordform fieldset
+{
+	border: 0;
+	padding: 0;
+	margin: 0;
+	min-width: 0;
+}
+#resetpasswordform fieldset legend,
+#lostpasswordform fieldset legend
+{
+	display: none;
+}
+body .wpc-filters-main-wrap li.wpc-term-item.wpc-term-count-0
+{
+	display: none !important;
+}
