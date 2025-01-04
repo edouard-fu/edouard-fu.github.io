@@ -1,0 +1,83 @@
+/* This CSS resource incorporates links to font software which is the
+   valuable copyrighted property of Type Network, Inc. and/or their
+   suppliers. You may not attempt to copy, install, redistribute,
+   convert, modify or reverse engineer this font software. Please
+   contact Type Network with any questions: www.typenetwork.com */
+
+  
+@font-face {
+font-family: "Alright Sans";
+font-weight: bold; 
+font-style: normal; 
+font-display: auto; 
+
+
+src: url("//fastly-cloud.typenetwork.com/projects/4999/1c78_405e_baa6e6f83f_635e.woff2?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff2"),
+     url("//fastly-cloud.typenetwork.com/projects/4999/1c78_405e_baa6e6f83f_635e.woff?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff");
+
+}
+		
+	 
+@font-face {
+font-family: "Alright Sans Light";
+font-weight: normal; 
+font-style: italic; 
+font-display: auto; 
+
+
+src: url("//fastly-cloud.typenetwork.com/projects/4999/1c7a_4063_baa6e6f83f_643a.woff2?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff2"),
+     url("//fastly-cloud.typenetwork.com/projects/4999/1c7a_4063_baa6e6f83f_643a.woff?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff");
+
+}
+		
+	 
+@font-face {
+font-family: "Alright Sans";
+font-weight: bold; 
+font-style: italic; 
+font-display: auto; 
+
+
+src: url("//fastly-cloud.typenetwork.com/projects/4999/1c7d_405f_baa6e6f83f_643b.woff2?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff2"),
+     url("//fastly-cloud.typenetwork.com/projects/4999/1c7d_405f_baa6e6f83f_643b.woff?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff");
+
+}
+		
+	 
+@font-face {
+font-family: "Alright Sans";
+font-weight: normal; 
+font-style: italic; 
+font-display: auto; 
+
+
+src: url("//fastly-cloud.typenetwork.com/projects/4999/1c72_4067_baa6e6f83f_6406.woff2?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff2"),
+     url("//fastly-cloud.typenetwork.com/projects/4999/1c72_4067_baa6e6f83f_6406.woff?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff");
+
+}
+		
+	 
+@font-face {
+font-family: "Alright Sans Light";
+font-weight: normal; 
+font-style: normal; 
+font-display: auto; 
+
+
+src: url("//fastly-cloud.typenetwork.com/projects/4999/1c6e_4062_baa6e6f83f_635c.woff2?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff2"),
+     url("//fastly-cloud.typenetwork.com/projects/4999/1c6e_4062_baa6e6f83f_635c.woff?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff");
+
+}
+		
+	 
+@font-face {
+font-family: "Alright Sans";
+font-weight: normal; 
+font-style: normal; 
+font-display: auto; 
+
+
+src: url("//fastly-cloud.typenetwork.com/projects/4999/1c75_4066_baa6e6f83f_635d.woff2?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff2"),
+     url("//fastly-cloud.typenetwork.com/projects/4999/1c75_4066_baa6e6f83f_635d.woff?ddc0ee1b29f22d0bf691ca97fc73962a4cad3c8e") format("woff");
+
+}
