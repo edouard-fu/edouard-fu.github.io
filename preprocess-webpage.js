@@ -137,7 +137,7 @@ const main = async () => {
                      <b>Total number of citations:</b> ${citationInfo.citationSum} <br>
                      <b>H-index:</b> ${citationInfo.hIndex} <br>`;
 
-  const templateFiles = ['docs/index.html', 'docs/pages/cv.html', 'docs/pages/network.html', 'docs/pages/publications.html', 'docs/pages/talks.html', 'docs/pages/team.html'];
+  const templateFiles = ['docs/index.html', 'docs/pages/biography.html', 'docs/pages/network.html', 'docs/pages/publications.html', 'docs/pages/talks.html', 'docs/pages/team.html'];
 
   templateFiles.forEach((filePath) => {
     const template = fs.readFileSync(filePath, 'utf-8');
