@@ -66,7 +66,7 @@ const scrapePubmed = async () => {
 
     const formatReferences = (summary) => {
         let publicationList = '';
-        let firstAuthorships = 0;
+        let firstAuthorships = 2; // Two papers as shared co-first author: PMID 34826514 and PMID 36280224
         let lastAuthorships = 0;
         let numberOfPapers = 0;
         
