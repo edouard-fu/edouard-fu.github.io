@@ -4,6 +4,24 @@ const ejs = require('ejs');
 const fs = require('fs');
 
 // Scrape Google Scholar for aggregate info (e.g. h-index)
+async function tryScrapeGoogleScholar() {
+  let result = '';
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      result = await scrapeGoogleScholar();
+      if (result.citationSum && result.citationSum.trim() !== '') {
+        console.log(`Success on attempt ${attempt}`);
+        break;
+      } else {
+        console.log(`Empty result on attempt ${attempt}`);
+      }
+    } catch (error) {
+      console.error(`Error on attempt ${attempt}:`, error);
+    }
+  }
+  return result;
+}
+
 const scrapeGoogleScholar = async () => {
   try {
     const url = "https://scholar.google.nl/citations?user=zqb-X38AAAAJ&hl";
@@ -50,7 +68,7 @@ const scrapePubmed = async () => {
     const database = "db=pubmed";
     const returnMode = "&retmode=json";
     const returnMax = "&retmax=500";
-    const searchTerm = "&term=Fu, EL [Author] OR 37397081";
+    const searchTerm = "&term=Fu, EL OR 37397081";
     const returnType = "&rettype=abstract";
     const idURL = `${pubmedSearchAPI}${database}${returnMode}${returnMax}${searchTerm}`;
 
@@ -128,7 +146,7 @@ const scrapePubmed = async () => {
 
 
 const main = async () => {
-  const citationInfo = await scrapeGoogleScholar();
+  const citationInfo = await tryScrapeGoogleScholar();
   const { publicationList, numberOfPapers, firstAuthorships, lastAuthorships } = await scrapePubmed();
 
   let authorStats = `<b>Number of papers:</b> ${numberOfPapers} <br>
@@ -136,6 +154,8 @@ const main = async () => {
                      <b>Number of last authorships:</b> ${lastAuthorships} <br>
                      <b>Total number of citations:</b> ${citationInfo.citationSum} <br>
                      <b>H-index:</b> ${citationInfo.hIndex} <br>`;
+
+  console.log(authorStats)
 
   const templateFiles = ['docs/index.html', 'docs/pages/biography.html', 'docs/pages/network.html', 'docs/pages/publications.html', 'docs/pages/talks.html', 'docs/pages/team.html'];
 
