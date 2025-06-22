@@ -1,63 +1,8 @@
-const cheerio = require("cheerio");
-const unirest = require("unirest");
+// @ts-check
+
+const { getJson } = require("serpapi");
 const ejs = require('ejs');
 const fs = require('fs');
-
-// Scrape Google Scholar for aggregate info (e.g. h-index)
-async function tryScrapeGoogleScholar() {
-  let result = '';
-  for (let attempt = 1; attempt <= 5; attempt++) {
-    try {
-      result = await scrapeGoogleScholar();
-      if (result.citationSum && result.citationSum.trim() !== '') {
-        console.log(`Success on attempt ${attempt}`);
-        break;
-      } else {
-        console.log(`Empty result on attempt ${attempt}`);
-      }
-    } catch (error) {
-      console.error(`Error on attempt ${attempt}:`, error);
-    }
-  }
-  return result;
-}
-
-const scrapeGoogleScholar = async () => {
-  try {
-    const url = "https://scholar.google.nl/citations?user=zqb-X38AAAAJ&hl";
-    const response = await unirest.get(url).headers({
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-    });
-
-    const $ = cheerio.load(response.body);
-    const authorResults = {
-      name: $("#gsc_prf_in").text(),
-      position: $("#gsc_prf_inw+ .gsc_prf_il").text(),
-      email: $("#gsc_prf_ivh").text(),
-      departments: $("#gsc_prf_int").text()
-    };
-
-    const citedBy = {
-      citations: {
-        all: $("tr:nth-child(1) .gsc_rsb_sc1+ .gsc_rsb_std").text()
-      },
-      hIndex: {
-        all: $("tr:nth-child(2) .gsc_rsb_sc1+ .gsc_rsb_std").text()
-      },
-      iIndex: {
-        all: $("tr~ tr+ tr .gsc_rsb_sc1+ .gsc_rsb_std").text()
-      }
-    };
-
-    return {
-      citationSum: citedBy.citations.all,
-      hIndex: citedBy.hIndex.all,
-      iIndex: citedBy.iIndex.all
-    };
-  } catch (error) {
-    console.error("Error occurred while scraping Google Scholar:", error);
-  }
-};
 
 // Scrape PubMed for all publication info
 const scrapePubmed = async () => {
@@ -146,17 +91,37 @@ const scrapePubmed = async () => {
 
 
 const main = async () => {
-  const citationInfo = await tryScrapeGoogleScholar();
+
+  // // Scrape Google Scholar for aggregate info (e.g. h-index)
+  const citationInfo = await getJson({
+    engine: "google_scholar_author",
+    author_id: "zqb-X38AAAAJ",
+    api_key: process.env.SERPAPI_KEY
+  });
+  
+  
+  let allCitations, H_index;
+  citationInfo.cited_by.table.forEach(entry => {
+    if (entry.citations) {
+      allCitations = entry.citations.all;
+    } else if (entry.h_index) {
+      H_index = entry.h_index.all;
+    }
+  });
+
+  // Scrape Pubmed
   const { publicationList, numberOfPapers, firstAuthorships, lastAuthorships } = await scrapePubmed();
 
+  // Store info in html code snippet
   let authorStats = `<b>Number of papers:</b> ${numberOfPapers} <br>
                      <b>Number of first authorships:</b> ${firstAuthorships}<br>
                      <b>Number of last authorships:</b> ${lastAuthorships} <br>
-                     <b>Total number of citations:</b> ${citationInfo.citationSum} <br>
-                     <b>H-index:</b> ${citationInfo.hIndex} <br>`;
+                     <b>Total number of citations:</b> ${allCitations} <br>
+                     <b>H-index:</b> ${H_index} <br>`;
 
   console.log(authorStats)
 
+  // Substitute html snippet in target file(s)
   const templateFiles = ['docs/index.html', 'docs/pages/biography.html', 'docs/pages/network.html', 'docs/pages/publications.html', 'docs/pages/talks.html', 'docs/pages/team.html'];
 
   templateFiles.forEach((filePath) => {

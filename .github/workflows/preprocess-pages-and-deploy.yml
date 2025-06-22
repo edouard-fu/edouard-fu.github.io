@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -19,10 +18,12 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run: npm install cheerio unirest ejs node-fetch
+      run: npm install ejs node-fetch
 
     - name: Run preprocessing script
       run: node preprocess-webpage.js
+      env:
+        SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
