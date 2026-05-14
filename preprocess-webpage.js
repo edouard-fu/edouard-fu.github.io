@@ -98,6 +98,9 @@ const main = async () => {
     author_id: "zqb-X38AAAAJ",
     api_key: process.env.SERPAPI_KEY
   });
+
+  console.log("Full API Response:", JSON.stringify(citationInfo, null, 2));
+
   
   
   let allCitations, H_index;
